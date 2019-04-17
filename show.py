@@ -9,13 +9,32 @@ from pycocotools import mask as maskUtils
 from skimage import io
 from matplotlib import pyplot as plt
 
+CATEGORIES = [
+        "__background",
+        "plane",
+        "baseball-diamond",
+        "bridge",
+        "ground-track-field",
+        "small-vehicle",
+        "large-vehicle",
+        "ship",
+        "tennis-court",
+        "basketball-court",
+        "storage-tank",
+        "soccer-ball-field",
+        "roundabout",
+        "harbor",
+        "swimming-pool",
+        "helicopter",
+        "container-crane"
+    ]
+
  
 def showDOTA(ROOT_DIR, ann="instances_DOTA_v1.5_train2018_add_difficult.json"): 
     coco = COCO(os.path.join(ROOT_DIR, ann))
     catIds = coco.getCatIds()
     imgIds = coco.getImgIds()
-    imgIds = coco.getImgIds()
-    img = coco.loadImgs(imgIds[np.random.randint(0,len(imgIds))])[0]
+    img = coco.loadImgs(imgIds[np.random.randint(0, len(imgIds))])[0]
     
     I = io.imread(os.path.join(ROOT_DIR, "images", img['file_name']))
     plt.axis('off')
@@ -28,6 +47,7 @@ def showDOTA(ROOT_DIR, ann="instances_DOTA_v1.5_train2018_add_difficult.json"):
     # plt.axis('off')
     annIds = coco.getAnnIds(imgIds=img['id'], catIds=catIds, iscrowd=None)
     anns = coco.loadAnns(annIds)
+    # print(anns)
     print(img['id'])
     coco.showAnns(anns)
     plt.show()
